@@ -22,7 +22,12 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    black: require('../assets/fonts/Montserrat-Black.ttf'),
+    regular: require('../assets/fonts/Montserrat-Regular.ttf'),
+    thin: require('../assets/fonts/Montserrat-Thin.ttf'),
+semiBold: require('../assets/fonts/Montserrat-SemiBold.ttf'),
+
+
     ...FontAwesome.font,
   });
 
@@ -52,6 +57,7 @@ function RootLayoutNav() {
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+        <Stack.Screen name='BookModal' options={{presentation:'containedModal'}} />
       </Stack>
     </ThemeProvider>
   );
