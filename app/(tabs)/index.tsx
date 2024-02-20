@@ -1,44 +1,98 @@
-import { Pressable, StyleSheet } from 'react-native';
 
-import EditScreenInfo from '@/components/EditScreenInfo';
+import Book from '@/components/Home/Book';
+import Genre from '@/components/Home/Genre';
 import { Text, View } from '@/components/Themed';
-import { Link } from 'expo-router';
+import { useRouter } from 'expo-router';
+import { useState } from 'react';
+import { Pressable, ScrollView, TouchableHighlight } from 'react-native';
 
-export default function TabOneScreen() {
+export default function HomeScreen() {
+
+  const router = useRouter()
+  const [genres] = useState(['Thriller', 'Fantasy', 'Mystery', 'Romance', 'Adventure', 'SciFi', 'Medical Related'])
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <Link
-        asChild
-        href={'/home'}
+    <View className="flex-1  ">
+
+      {/* Title Section */}
+      <View
+        className='flex-row justify-between w-[90%] mx-auto items-center '
       >
-        <Pressable>
+        <Text
+          className='font-semiBold text-lg'
+        >
+          Book Category
+        </Text>
+        <TouchableHighlight
+          className='bg-blue-900/10 h-8 w-20 flex justify-center items-center rounded-md'
+        >
           <Text
-            style={{fontSize:16, color:'white'}}
-          >
-            Home
-          </Text>          
-        </Pressable>
-      </Link>
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
+            className='font-regular '
+          >See All</Text>
+        </TouchableHighlight>
+      </View>
+
+      {/* Genres ScrollView */}
+      <View
+        className='mt-8 bg-transparent'
+        >
+      <ScrollView
+        bouncesZoom
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        className=''
+
+      >
+
+          {
+            genres.map((item, index) => {
+              return (
+                <Genre title={item}  index={index} key={index}/>
+              )
+            }
+            )
+          }
+        </ScrollView>
+      </View>
+      
+      {/* Trending Books Title Section */}
+
+      <View
+        className='flex-row justify-between w-[90%] mx-auto items-center mt-8'
+      >
+        <Text
+          className='font-semiBold text-lg'
+        >
+          Trending Now
+        </Text>
+            <TouchableHighlight
+          className='bg-blue-900/10 h-8 w-20 flex justify-center items-center rounded-md'
+        >
+          <Text
+            className='font-regular '
+          >See All</Text>
+        </TouchableHighlight>
+      </View>
+      {/* Trending Books  Section */}
+
+      <View>
+        <ScrollView
+          horizontal 
+          showsHorizontalScrollIndicator={false}
+        >
+          {
+            [1, 2, 3, 4, 5].map((index) => (
+              <Pressable
+                onPress={()=>router.navigate('/BookModal')}
+              >
+                <Book author='Michael Ndichu' title='Book Titil' key={index} price={4000}  />
+                </Pressable>
+            ))
+          }
+        </ScrollView>
+      </View>
     </View>
+
+    
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
-});
