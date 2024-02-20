@@ -7,7 +7,16 @@ module.exports = {
 
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        thin: 'light',
+        semiBold: 'semiBold',
+        regular: 'regular'
+      },
+      container: {
+        center: true
+      }
+    },
   },
   plugins: [],
 }
