@@ -24,12 +24,13 @@ export default function TabLayout() {
 
   return (
     <Tabs
-      screenOptions={({route}) => {
+      screenOptions={({ route }) => {
+            let iconName:any 
+        
         return {
          tabBarActiveTintColor: Colors[colorScheme ?? 'light']?.tint,
           headerShown: useClientOnlyValue(false, true),
           tabBarIcon: ({ focused }) => {
-            let iconName: String; 
             
             if (route.name === 'Home')
             {
