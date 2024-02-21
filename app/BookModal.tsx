@@ -1,5 +1,6 @@
 import { View, Text, Pressable } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useLocalSearchParams } from 'expo-router'
 interface BookModalProps {
     // imageUrl: string, 
     title: string, 
@@ -10,7 +11,11 @@ interface BookModalProps {
 }
 
 
-const BookModal: React.FC<BookModalProps> = ({title,price}) => {
+const BookModal: React.FC<BookModalProps> = ({ title, price }) => {
+      const { author}  = useLocalSearchParams()
+    
+  useEffect(() => { console.log(author) }, [])
+  
   return (
     <View>
       <Pressable
