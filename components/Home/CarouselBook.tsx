@@ -11,7 +11,7 @@ interface BookProps  {
 const Book:React.FC<BookProps> = ({title, author, price}) => {
   return (
       <View
-        className='h-[300px] w-[200px] bg-red-400/10 mx-3 mt-4'
+        className='h-[300px] w-[200px] bg-red-400/10 mx-3 mt-4 justify-end'
       > 
           <Text>{title}</Text>
           <Text>{ author }</Text>
