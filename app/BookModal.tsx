@@ -1,30 +1,45 @@
-import { View, Text, Pressable } from 'react-native'
+import { View, Text, Pressable, Image, ImageBackground } from 'react-native'
 import React, { useEffect } from 'react'
 import { useLocalSearchParams } from 'expo-router'
-interface BookModalProps {
-    // imageUrl: string, 
-    title: string, 
-    price: number, 
-    // category: string, 
-    // pages: number, 
-    // language:string
-}
+import useImageFetch from '@/hooks/useImageFetch'
+// interface BookModalProps {
+//     // imageUrl: string, 
+//     title: string, 
+//     price: number, 
+//     // category: string, 
+//     // pages: number, 
+//     // language:string
+// }
 
 
-const BookModal: React.FC<BookModalProps> = ({ title, price }) => {
-      const { author}  = useLocalSearchParams()
-    
-  useEffect(() => { console.log(author) }, [])
-  
+const BookModal = () => {
+  const { cover_i, title } = useLocalSearchParams()
+
+  const image = useImageFetch()
+
+
   return (
-    <View>
-      <Pressable
-        onPress={()=>console.log(price, title)}
-
+    <View
+      className='flex-1 '
+    >
+      {/* Image Section */}
+      <View
+        className="w-screen h-1/3 rounded-br-lg bg-slate-200"
       >
-         <Text
-      >BookModal</Text>
-     </Pressable>
+        <Image
+          source={{ uri: `https://covers.openlibrary.org/b/oclc/${image}-L.jpg` }} 
+          className='w-[100%] h-[100%] '
+        />
+      </View>
+
+      {/* Title  Section */}
+      <View
+        className='h-20 bg-black flex-row justify-between items-center'
+      >
+        <Text>{title}</Text>
+        
+      </View>
+
     </View>
   )
 }
