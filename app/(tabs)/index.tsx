@@ -1,4 +1,4 @@
-
+import React from 'react';
 import Book from '@/components/Home/CarouselBook';
 import Genre from '@/components/Home/Genre';
 import NewPublishBook from '@/components/Home/NewPublishBook';
@@ -122,13 +122,13 @@ viewBox="0 0 24 24"
         >
           Trending Now
         </Text>
-            <TouchableHighlight
+            <Pressable
           className={`  h-8 w-20 flex justify-center items-center rounded-md`}
         >
           <Text
             className='font-regular '
           >See All</Text>
-        </TouchableHighlight>
+        </Pressable>
       </View>
       {/* Trending Books  Section */}
 
@@ -148,14 +148,14 @@ viewBox="0 0 24 24"
           showsHorizontalScrollIndicator={false}
         >
           {
-            data.docs.slice(0,10).map(({title,  cover_i},index) => (
+            data.docs.slice(0,10).map(({title,  cover_i, author_name},index) => (
               <Pressable
                 onPress={() => { router.navigate('/BookModal');  console.log(cover_i)}}
                 key={index}
               >
                 <Book
-                  author={title}
-                  title='Book Titil'
+                  author={author_name}
+                  title={title}
                   coverUrl={cover_i} />
                 </Pressable>
             ))

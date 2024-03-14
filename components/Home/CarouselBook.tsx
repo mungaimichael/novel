@@ -1,5 +1,6 @@
 import { View, Text, useColorScheme, Pressable, Image, ImageBackground } from 'react-native'
 import React from 'react'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 
 interface BookProps {
@@ -18,26 +19,30 @@ const Book: React.FC<BookProps> = ({ title, author, coverUrl }) => {
   return (
 
     <View
-      className={` bg-slate-400/70 dark:bg-slate-500/40  h-[300px] w-[200px]  mx-3 mt-4 justify-around space-y-3 px-2 rounded-xl `}
+      className={` bg-slate-100/40 dark:bg-slate-500/40  h-[400px] w-[250px]  mx-3 mt-4 justify-around   rounded-xl `}
     >
       <View
         className='flex-1 justify-center items-center'
       >
         {
           coverUrl === undefined ? (
-          <Text>Image unavailble</Text>
+            <View
+              className="rounded-lg bg-[#808080]/20 w-full flex-1 justify-center items-center"
+            >
+              <MaterialCommunityIcons name="image-remove" size={50} color="#808080" />
+            </View>
           )
             : (
               <Image
                 source={{ uri: `https://covers.openlibrary.org/b/id/${coverUrl}-L.jpg` }}
-                className=' aspect-auto '
+                className=' w-full h-full rounded-t-lg '
               />
-          )
+            )
         }
-        </View>
+      </View>
 
       <View
-        className='justify-start space-y-4 bg-red-400/10 items-start h-1/3'
+        className='justify-start space-y-4 pl-1 items-start h-1/5'
       >
 
         <Text
@@ -46,7 +51,6 @@ const Book: React.FC<BookProps> = ({ title, author, coverUrl }) => {
         <Text
           className={`${text}`}
         >{author}</Text>
-        <Text>{coverUrl}</Text>
       </View>
     </View>
 
