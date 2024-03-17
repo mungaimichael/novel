@@ -27,7 +27,7 @@ const Book: React.FC<BookProps> = ({ title, author, coverUrl }) => {
         {
           coverUrl === undefined ? (
             <View
-              className="rounded-lg bg-[#808080]/20 w-full flex-1 justify-center items-center"
+              className="rounded-lg bg-[#808080]/40 w-full flex-1 justify-center items-center"
             >
               <MaterialCommunityIcons name="image-remove" size={50} color="#808080" />
             </View>
@@ -36,6 +36,8 @@ const Book: React.FC<BookProps> = ({ title, author, coverUrl }) => {
               <Image
                 source={{ uri: `https://covers.openlibrary.org/b/id/${coverUrl}-L.jpg` }}
                 className=' w-full h-full rounded-t-lg '
+                style={{ resizeMode: 'cover' }}
+
               />
             )
         }
