@@ -2,7 +2,6 @@ import React from 'react';
 import Book from '@/components/Home/CarouselBook';
 import Genre from '@/components/Home/Genre';
 import NewPublishBook from '@/components/Home/NewPublishBook';
-import SearchBook from '@/components/Home/SearchBook';
 import { Text, View } from '@/components/Themed';
 import useDataFetch from '@/hooks/useDataFetch';
 import { AntDesign } from '@expo/vector-icons';
@@ -59,7 +58,7 @@ viewBox="0 0 24 24"
   
       <Path
         strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-        stroke="#964B00"
+        stroke="#000000"
         d="M12 3V6M12 18V21M6 12H3M21 12H18M5.63672 5.63672L7.75977 7.75977M16.2422 16.2422L18.3633 18.3633M18.3652 5.63477L16.2441 7.75586M7.75781 16.2422L5.63477 18.3652"
       />
     </Svg>
@@ -67,7 +66,6 @@ viewBox="0 0 24 24"
   
   return (
     <View className="flex-1 relative ">
-      <SearchBook showSearch={false} />
       <ScrollView>
 
       {/* Title Section */}
@@ -79,14 +77,14 @@ viewBox="0 0 24 24"
         >
           Book Category
         </Text>
-          <TouchableHighlight
-            onPress={()=>data.docs.slice(0,10).map((item)=>console.log(item.type))}
+          <Pressable
+          
           className={`${colorScheme==='light' ? 'bg-blue-900/10' :'bg-slate-300/80' } h-8 w-20 flex justify-center items-center rounded-md`}
         >
           <Text
             className='font-regular '
           >See All</Text>
-        </TouchableHighlight>
+        </Pressable>
       </View>
 
       {/* Genres ScrollView */}
@@ -148,9 +146,20 @@ viewBox="0 0 24 24"
           showsHorizontalScrollIndicator={false}
         >
           {
-            data.docs.slice(0,10).map(({title,  cover_i, author_name},index) => (
+            data.docs.slice(0,10).map(({title,  cover_i, author_name, ratings_count_3},index) => (
               <Pressable
-                onPress={() => { router.navigate('/BookModal');  console.log(cover_i)}}
+                onPress={() => { 
+                  console.log(ratings_count_3)
+                  router.navigate({
+                    pathname: '/BookModal', 
+                    params: {
+                      cover_i, 
+                      title, 
+                      author_name, 
+                      ratings_count_3
+                    }
+                  })
+                }}
                 key={index}
               >
                 <Book
@@ -183,10 +192,9 @@ viewBox="0 0 24 24"
             snapToStart
           >
             {
-              [1, 2, 3, 45, 9].map((index) => (
+              data.docs.slice(10, 15).map(({ title, cover_i, author_name}, index) => (
                 <Pressable
                   key={index}
-                  // onPress={()=>router.navigate('BookModal', params: {author:'Michael Ndichu', heading:'Not a Problem'})}
                   onPress={() => router.navigate({
                     pathname: 'BookModal', 
 
@@ -196,7 +204,12 @@ viewBox="0 0 24 24"
                     }
                   })}
                 >
-                  <NewPublishBook author='Michael Ndichu' heading='Hairy Porter' />
+                  <NewPublishBook
+                    author_name={author_name}
+                    title={title}
+                    cover_i={cover_i}
+                    key={index}
+                  />
                 </Pressable>
               ))
           }
