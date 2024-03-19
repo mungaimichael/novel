@@ -9,6 +9,7 @@ import { useRouter } from 'expo-router';
 import { useEffect, useRef, useState } from 'react';
 import { Pressable, ScrollView, TouchableHighlight, useColorScheme, Animated, Easing, StyleSheet } from 'react-native';
 import { Svg, Path } from 'react-native-svg';
+import Loader from '@/components/Home/Loader';
 
 export default function HomeScreen() {
 
@@ -133,12 +134,7 @@ viewBox="0 0 24 24"
       <>
           {
             loading && loading ? (
-              <Animated.View
-                className={'w-[50px] h-[50px] mx-auto '}
-                style={{transform:[{rotate:spin}]}}>
-        
-                <SvgLoader/>
-      </Animated.View>
+              <Loader loading={loading} />
             ) : (
                 <>
         <ScrollView

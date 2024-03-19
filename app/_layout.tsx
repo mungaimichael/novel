@@ -61,7 +61,7 @@ function RootLayoutNav() {
         <Stack.Screen name='SearchPage' options={
           {
             headerTitle:'',
-            presentation: 'containedModal'
+            presentation: 'modal'
           }} />
       </Stack>
     </ThemeProvider>
