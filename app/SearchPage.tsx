@@ -26,7 +26,7 @@ const SearchPage: React.FC = () => {
     }
 
 
-    const {data, loading}= useDataFetch(searchValue.toLowerCase())
+    const {data, loading} = useDataFetch(searchValue)
 
 
 

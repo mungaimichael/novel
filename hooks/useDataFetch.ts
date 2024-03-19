@@ -89,7 +89,9 @@ export interface DataFetchReturn {
     data:Main
 }
 
-const useDataFetch = (): DataFetchReturn => {
+const useDataFetch = (search?: string): DataFetchReturn => {
+    
+    
     const [data, setData] = useState<Main>({
         numFound: 0,
         start: 0,
@@ -104,7 +106,7 @@ const useDataFetch = (): DataFetchReturn => {
     const fetchData = async () => {
         try {
             setLoading(true);
-            const response = await fetch('https://openlibrary.org/search.json?q=javascript+typescript&limit=1&numFoundExact&limit=20');
+            const response = await fetch(`https://openlibrary.org/search.json?q=${search}&limit=1&numFoundExact&limit=20`);
             const jsonData = await response.json();
             setData(jsonData);
             setLoading(false);
