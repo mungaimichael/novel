@@ -4,6 +4,8 @@ import Input from '@/components/Search/Input'
 import { Ionicons } from '@expo/vector-icons'
 import useDataFetch from '@/hooks/useDataFetch'
 
+import SearchListItem from '@/components/Search/SearchListItem'
+
 const SearchPage: React.FC = () => {
 
 
@@ -26,7 +28,7 @@ const SearchPage: React.FC = () => {
     }
 
 
-    const {data, loading} = useDataFetch(searchValue)
+    const {data, loading} = useDataFetch('java')
 
 
 
@@ -59,7 +61,7 @@ const SearchPage: React.FC = () => {
                         onChangeText={(text: string) => setSearchValue(text)}
                     />
                     <Pressable
-                        onPress={() => { addSearches(searchValue); console.log(loading ? 'loading' :  searchValue,data) }}
+                        onPress={() => { addSearches(searchValue); console.log(loading ? loading :  searchValue,data) }}
                         className="absolute right-5 bg-slate-800/70 w-14 h-[48] top-[36] flex justify-center items-center rounded-lg"
                     >
                         <Ionicons
@@ -98,7 +100,17 @@ const SearchPage: React.FC = () => {
                 <View
                     className="w-[90%] flex-row flex-wrap justify-start space-x-8"
                 >
-
+                    {
+                        data && data.docs.map(({title, author_name, cover_i}, index) => (
+                            <SearchListItem
+                                key={index}
+                                title={title}
+                                author={author_name}
+                                coverUrl={cover_i}
+                                
+                            />
+                        ))
+                        }
                 </View>
 
             </ScrollView>
