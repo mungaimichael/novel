@@ -1,34 +1,80 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, FC } from 'react';
 import { Text, View, ScrollView, Image, StyleSheet } from 'react-native';
 import useFavourites from '@/hooks/useLocalStorage';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import Loader from '@/components/Home/Loader';
+import { Svg } from 'react-native-svg';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Favourites: React.FC = () => {
-  const { allItems, getAllItems } = useFavourites();
+  const { allItems, getAllItems, loading } = useFavourites();
 
   useEffect(() => {
-    getAllItems();
-    console.log(allItems)
+    const getAll = async () => {
+      const data = await getAllItems()
+      return data
+    }
+getAll()
   }, []);
 
+
+
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.bookContainer}>
-        {allItems &&
-          allItems.map(({ author_name, title, cover_i }, index) => (
-            <ListBook
-              key={index}
-              title={title}
-              author={author_name}
-              coverUrl={cover_i}
+    <>
+      {
+        allItems && allItems.length <= 0 ? (
+          <View
+            className="flex-1 bg-[#fff] justify-center items-center "
+          >
+            <Text
+              className=" text-xl font-regular"
+            >
+              No Favourites available
+            </Text>
+            <Image
+              source={require('@/assets/images/heart.png')}
+              style={styles.imageIcon}
             />
-          ))}
-      </View>
-    </ScrollView>
+          </View>
+        ) : (
+          <ScrollView style={styles.container}>
+            {
+              loading ? (
+                <View
+                  className="flex-1 justify-center items-center"
+                >
+
+                  <Loader
+                    loading={loading}
+                  />
+                </View>) : (
+                <View style={styles.bookContainer}>
+                  {allItems &&
+                    allItems.map(({ author_name, title, cover_i }, index) => (
+                      <ListBook
+
+                        key={index}
+                        title={title}
+                        author={author_name}
+                        coverUrl={cover_i}
+                      />
+                    ))}
+                </View>
+              )
+            }
+          </ScrollView >
+        )
+      }
+    </>
   );
 };
 
-function ListBook({ coverUrl, title, author }) {
+interface ListBooksProps {
+  coverUrl: string,
+  title: string,
+  author: string
+}
+const ListBook: React.FC<ListBooksProps> = ({ coverUrl, title, author }) => {
   return (
     <View style={styles.listBook}>
       <View style={styles.imageContainer}>
@@ -43,10 +89,10 @@ function ListBook({ coverUrl, title, author }) {
           />
         )}
       </View>
-
     </View>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
@@ -56,9 +102,9 @@ const styles = StyleSheet.create({
   bookContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    paddingHorizontal: 16,
+    justifyContent: 'flex-start',
     paddingVertical: 16,
+    marginHorizontal:5
   },
   listBook: {
     width: '30%', // Adjust width according to your layout
@@ -77,7 +123,7 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
-    resizeMode: 'cover',
+    resizeMode: 'contain',
   },
   textContainer: {
     paddingHorizontal: 8,
@@ -89,6 +135,10 @@ const styles = StyleSheet.create({
   },
   author: {
     fontSize: 14,
+  },
+  imageIcon: {
+    width: '30%', // Set width to fill the container
+    resizeMode: 'contain', // Adjust resizeMode as needed
   },
 });
 
