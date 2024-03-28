@@ -10,7 +10,8 @@ interface ItemData {
 
 const useFavourites = () => {
     const [favourites, setFavourites] = useState<ItemData[]>([]);
-    const [allItems, setAllItems] = useState<ItemData[] | null>(null); // Change here
+    const [allItems, setAllItems] = useState<ItemData[] | null>(null);
+    const [loading, setLoading] = useState(false);
 
     const addToFavourites = async (title: string, cover_i: string, author_name: string): Promise<void> => {
         try {
@@ -50,26 +51,31 @@ const useFavourites = () => {
         }
     };
 
-    const getAllItems = async (): Promise<void> => {
+    const getAllItems = async (): Promise<ItemData[]> => {
         try {
+            setLoading(true);
             const keys: readonly string[] = await AsyncStorage.getAllKeys();
             const values: readonly [string, string | null][] = await AsyncStorage.multiGet(keys);
 
             const parsedItems: ItemData[] = values
                 .filter(([_, value]) => value !== null)
                 .map(([_, value]) => JSON.parse(value!));
-            
-            console.log(parsedItems, 'from the custom hook')
-            setAllItems(parsedItems); // Change here
+
+            setAllItems(parsedItems);
+            setLoading(false);
+            return parsedItems;
 
         } catch (error) {
             console.error('Error retrieving items from AsyncStorage', error);
+            throw error;
         }
     };
+
 
     return {
         favourites,
         allItems,
+        loading, 
         addToFavourites,
         removeFromFavourites,
         getAllItems

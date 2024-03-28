@@ -11,7 +11,8 @@ module.exports = {
       fontFamily: {
         thin: 'light',
         semiBold: 'semiBold',
-        regular: 'regular'
+        regular: 'regular', 
+        black:'black'
       },
       container: {
         center: true
