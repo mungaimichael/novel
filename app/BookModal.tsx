@@ -1,7 +1,7 @@
 import { View, Text, Image, Pressable } from 'react-native';
 import React, { useEffect } from 'react';
 import { useLocalSearchParams } from 'expo-router';
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
+import { AntDesign, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import useFavourites from '@/hooks/useLocalStorage';
 
@@ -13,18 +13,18 @@ interface BookSearchParams {
 
 const BookModal = () => {
   const params: BookSearchParams = useLocalSearchParams();
-  
-  const { title = "", cover_i = "", author_name = ""} = params || {};
+
+  const { title = "", cover_i = "", author_name = "" } = params || {};
 
 
-const {addToFavourites} = useFavourites()
+  const { addToFavourites } = useFavourites()
 
 
   return (
     <View
       className="flex-1  relative  ">
       <Pressable
-        onPress={()=>addToFavourites(title, cover_i, author_name)}
+        onPress={() => addToFavourites(title, cover_i, author_name)}
         className="absolute top-[2%] right-4   z-10"
       >
         <Ionicons
@@ -45,25 +45,60 @@ const {addToFavourites} = useFavourites()
             <View
               className="w-screen h-1/2 flex justify-center items-center   "
             >
-              
-                <Image
-                  source={{ uri: `https://covers.openlibrary.org/b/id/${cover_i}-L.jpg` }}
-                  className=' w-full h-[100%]  '
-                />
-              
+
+              <Image
+                source={{ uri: `https://covers.openlibrary.org/b/id/${cover_i}-L.jpg` }}
+                className=' w-full h-[100%]  '
+              />
+
             </View>
           )
       }
       <View
-        className="pl-4 mt-3 flex space-y-5"
+        className="pl-4 mt-3 flex  space-y-2"
       >
-        <Text
-          className=" font-regular text-xl"
-        >{title}</Text>
-        <Text>{author_name}</Text>
+        <View
+          className=" mt-3 flex space-y-2"
 
+        >
+          <Text
+            className=" font-semiBold text-xl"
+          >{title}</Text>
+          <Text>{author_name}</Text>
+        </View>
 
-     </View>
+        <View
+          className="flex-row items-center justify-between w-1/3"
+        >
+          <AntDesign name="star" size={18} color="black" />
+          <Text>
+              3.8
+          </Text>
+          <Text>.</Text>
+          <Text
+          >
+            5 Reviews
+          </Text>
+        </View>
+
+        {/* Book Description  */}
+        <View
+          className=""
+        >
+          <Text
+            className="text-xl font-regular"
+          >
+            Description
+          </Text>
+          <Text
+            className="font-regular text-sm"
+          >
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque praesentium impedit hic! Earum veritatis, ut quis quo sint ab. Vel explicabo dolore voluptas voluptates animi cupiditate, iusto ratione culpa facere!
+            Velit ipsam laborum error debitis ad repudiandae numquam, temporibus quis, aperiam, quos blanditiis aut non dolores. Ut tempore minima maiores dignissimos et veritatis ipsa, iusto nisi voluptates autem, excepturi aperiam?
+          </Text>
+        </View>
+
+      </View>
     </View>
   );
 };
