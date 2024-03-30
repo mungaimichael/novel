@@ -1,11 +1,15 @@
+import { Input } from '@/components/Input'
 import { MaterialIcons } from '@expo/vector-icons'
+import { useRouter } from 'expo-router'
 import React from 'react'
-import { Image, SafeAreaView, Text, View } from 'react-native'
+import { Button, Image, Pressable, SafeAreaView, Text, View } from 'react-native'
 
 const SignUp = () => {
     const leaf = require("@/assets/images/leaf.png")
     const leaf2 = require("@/assets/images/leaf2.png")
-    
+
+    const router = useRouter()
+
 
     return (
         <SafeAreaView
@@ -41,13 +45,42 @@ const SignUp = () => {
                     >Welcome</Text>
                     <Text
                         className="font-regular text-md text-white"
-                    >Sign In To Continue</Text>
+                    >Sign up To Continue</Text>
                 </View>
             </View>
 
             {/* Form Section */}
 
-        <View></View>
+            <View
+                className="h-1/2 w-[85%] mt-12 mx-auto  "
+            >
+                <Input
+                    label='email address'
+                />
+                <Input
+                    label='Password'
+                    icon
+                />
+                <Pressable
+                    onPress={() => router.navigate('SignUp')}
+                    className=" mt-3 bg-green-800/80 h-[40] flex justify-center items-center"
+                ><Text
+                    className="font-regular text-md text-white"
+                >Get Started</Text></Pressable>
+                <View
+                    className="flex-row justify-between mt-10"
+                >
+                    <Pressable
+                        onPress={()=>router.navigate('Login')}
+                    >
+                        <Text
+                            className="font-semiBold text-green-800"
+                        >
+                            Have An Account ? Log In
+                        </Text>
+               </Pressable>
+        </View>
+            </View>
         </SafeAreaView>
     )
 }
