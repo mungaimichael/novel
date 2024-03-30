@@ -74,9 +74,9 @@ const SignUp = () => {
                         onPress={()=>router.navigate('Login')}
                     >
                         <Text
-                            className="font-semiBold text-green-800"
+                            className="font-semiBold text-green-800 capitalize"
                         >
-                            Have An Account ? Log In
+                            Having issues ? Click here
                         </Text>
                </Pressable>
         </View>

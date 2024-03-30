@@ -3,14 +3,14 @@ import React from 'react'
 
 const StacksLayout = () => {
   return (
-      <Stack>
-          <Stack.Screen
+    <Stack>
+      <Stack.Screen
         name='Login'
-        options={{headerShown:false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name='SignUp'
-        options={{headerShown:false}}
+        options={{ headerShown: false }}
       />
     </Stack>
   )

@@ -8,6 +8,7 @@ import React, { useEffect, useState } from 'react';
 import { useColorScheme } from '@/components/useColorScheme';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import Index from './(auth)/Login';
+import AuthProvider from '@/context/AuthContext';
 
 
 export {
@@ -28,7 +29,7 @@ export default function RootLayout() {
     black: require('../assets/fonts/Montserrat-Black.ttf'),
     regular: require('../assets/fonts/Montserrat-Regular.ttf'),
     thin: require('../assets/fonts/Montserrat-Thin.ttf'),
-semiBold: require('../assets/fonts/Montserrat-SemiBold.ttf'),
+    semiBold: require('../assets/fonts/Montserrat-SemiBold.ttf'),
 
 
     ...FontAwesome.font,
@@ -59,24 +60,27 @@ function RootLayoutNav() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-      {
-          authenticated ? (
-            <>
-              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-              <Stack.Screen name='BookModal' options={{ presentation: 'modal' }} />
-              <Stack.Screen name='SearchPage' options={
-                {
-                  headerTitle: '',
-                  presentation: 'modal'
-                }} />
-            </>
+      <AuthProvider>
+        <Stack>
+          {
+            authenticated ? (
+              <>
+                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                <Stack.Screen name='BookModal' options={{ presentation: 'modal' }} />
+                <Stack.Screen name='SearchPage' options={
+                  {
+                    headerTitle: '',
+                    presentation: 'modal'
+                  }} />
+              </>
 
-          ) : 
-          <Stack.Screen name="(auth)" options={{headerShown:false}} />
-          
-        }
+            ) :
+              <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+
+          }
         </Stack>
-      </ThemeProvider>
+      </AuthProvider>
+
+    </ThemeProvider>
   );
 }
