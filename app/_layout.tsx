@@ -3,9 +3,12 @@ import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useColorScheme } from '@/components/useColorScheme';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import Index from './(auth)/Login';
+
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -52,18 +55,28 @@ semiBold: require('../assets/fonts/Montserrat-SemiBold.ttf'),
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
+  const [authenticated, setAuthenticated] = useState<boolean>(false)
+
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-        <Stack.Screen name='BookModal' options={{ presentation: 'modal' }} />
-        <Stack.Screen name='SearchPage' options={
-          {
-            headerTitle:'',
-            presentation: 'modal'
-          }} />
-      </Stack>
-    </ThemeProvider>
+      {
+          authenticated ? (
+            <>
+              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+              <Stack.Screen name='BookModal' options={{ presentation: 'modal' }} />
+              <Stack.Screen name='SearchPage' options={
+                {
+                  headerTitle: '',
+                  presentation: 'modal'
+                }} />
+            </>
+
+          ) : 
+          <Stack.Screen name="(auth)" options={{headerShown:false}} />
+          
+        }
+        </Stack>
+      </ThemeProvider>
   );
 }
