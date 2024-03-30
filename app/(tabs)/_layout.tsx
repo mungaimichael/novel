@@ -65,20 +65,20 @@ export default function TabLayout() {
               </Pressable>
             </Link>
           ),
-          headerLeft: () => (
-            <Link href="/modal" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <Ionicons
-                    name="menu"
-                    size={25}
-                    color={Colors[colorScheme ?? 'light'].text}
-                    style={{ marginLeft: 25, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
-          ), 
+          // headerLeft: () => (
+          //   <Link href="" >
+          //     <Pressable>
+          //       {({ pressed }) => (
+          //         <Ionicons
+          //           name="menu"
+          //           size={25}
+          //           color={Colors[colorScheme ?? 'light'].text}
+          //           style={{ marginLeft: 25, opacity: pressed ? 0.5 : 1 }}
+          //         />
+          //       )}
+          //     </Pressable>
+          //   </Link>
+          // ), 
           headerStyle:{},
           headerTitle: '',
           headerTitleAlign:'center'
