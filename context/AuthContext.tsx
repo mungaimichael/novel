@@ -1,58 +1,68 @@
 import { useRouter, useSegments } from 'expo-router';
 import React, { createContext, useState, useContext, useEffect } from 'react';
-// import { AuthData, authService } from '../services/authService';
-
+import useLocalStorage from '@/hooks/useLocalStorage';
 
 type AuthContextData = {
     authData?: AuthData;
     loading: boolean;
-
+    signIn: (email: string) => void;
 };
 
 type AuthData = {
     token: string;
     email: string;
-    name: string;
 };
 
-interface AuthProvider {
-    children: React.ReactNode
+interface AuthProviderProps {
+    children: React.ReactNode;
 }
 
+export const useAuthContext = () => {
+    return useContext(AuthContext);
+}
 
+const AuthContext = createContext<AuthContextData>({ loading: true, signIn: () => { } });
 
+const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+    const { addUserToLocalStorage, getUserFromLocalStorage } = useLocalStorage();
+    const router = useRouter();
+    const rootSegment = useSegments();
 
-const AuthContext = createContext<AuthContextData>(null as unknown as AuthContextData);
+    const signIn = (email: string) => {
+        addUserToLocalStorage(email)
+        setAuthData({ email, token: email });
+    };
 
-const AuthProvider: React.FC<AuthProvider> = ({ children }) => {
-
-    const router = useRouter()
-    const rootSegment = useSegments()
-
-    const signin = (email: string) => {
-        setAuthData({ email, token: '2424', name: email })
-    }
     const [authData, setAuthData] = useState<AuthData>();
-
-    //The loading part will be explained in the persist step session
     const [loading, setLoading] = useState(true);
 
+    useEffect(() => {
+        const run = async () => {
+            const data = await getUserFromLocalStorage();
+            if (data) {
+                setAuthData(data);
+            }
+            setLoading(false);
+        };
+        run();
+
+        // No need for token comparison here
+        // Redirect logic can be handled after loading
+    }, []);
 
     useEffect(() => {
-        if (authData?.token === '') return;
-
-        if (authData?.token === "" && rootSegment[0] !== "(auth)") {
-            router.replace("/(auth)/SignUp")
+        // Redirect logic after loading
+        if (!loading) {
+            if (!authData && rootSegment[0] !== "(auth)") {
+                router.replace("/(auth)/SignUp");
+            } else if (authData && rootSegment[0] !== "(app)") {
+                router.replace("/(tabs)");
+            }
         }
-        else if (authData?.token && rootSegment[0] !== "(app)") {
-            router.replace("/(tabs)")
-        }
-    }, [])
+    }, [authData, loading]);
 
     return (
-        //This component will be used to encapsulate the whole App,
-        //so all components will have access to the Context
-        <AuthContext.Provider value={{ authData, loading }}>
+        <AuthContext.Provider value={{ authData, loading, signIn }}>
             {children}
         </AuthContext.Provider>
     );
