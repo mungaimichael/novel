@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useLocalSearchParams } from 'expo-router';
 import { AntDesign, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import useFavourites from '@/hooks/useLocalStorage';
+import useLocaStorage from '@/hooks/useLocalStorage';
 
 interface BookSearchParams {
   title?: string;
@@ -17,7 +17,7 @@ const BookModal = () => {
   const { title = "", cover_i = "", author_name = "" } = params || {};
 
 
-  const { addToFavourites } = useFavourites()
+  const { addToFavourites } = useLocaStorage()
 
 
   return (

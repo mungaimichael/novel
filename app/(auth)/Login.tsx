@@ -1,11 +1,19 @@
 import { useRouter } from 'expo-router';
-import React, { FC } from 'react'
+import React, { FC, useEffect } from 'react'
 import { Image, Pressable, SafeAreaView, StyleSheet, Text, View } from 'react-native'
+import { useAuthContext } from '@/context/AuthContext';
 
 const Login: FC = () => {
     const router = useRouter();
     const leaf = require("@/assets/images/leaf.png")
     const leaf2 = require("@/assets/images/leaf2.png")
+
+    const { authData, signIn } = useAuthContext()
+
+    useEffect(() => {
+        signIn('mungai')
+        console.log(authData)
+    }, [])
 
     // const images = [require('@/assets/images/6.jpg'), require('@/assets/images/1.jpg'), require('@/assets/images/2.webp'), require('@/assets/images/1.jpg'), require('@/assets/images/3.jpeg'), require('@/assets/images/6.jpg'), require('@/assets/images/1.jpg'), require('@/assets/images/3.jpeg'), require('@/assets/images/4.webp')];
     return (

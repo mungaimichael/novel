@@ -1,7 +1,7 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
+import { Slot, Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import React, { useEffect, useState } from 'react';
 
@@ -61,24 +61,7 @@ function RootLayoutNav() {
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <AuthProvider>
-        <Stack>
-          {
-            authenticated ? (
-              <>
-                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-                <Stack.Screen name='BookModal' options={{ presentation: 'modal' }} />
-                <Stack.Screen name='SearchPage' options={
-                  {
-                    headerTitle: '',
-                    presentation: 'modal'
-                  }} />
-              </>
-
-            ) :
-              <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-
-          }
-        </Stack>
+          <Slot/>
       </AuthProvider>
 
     </ThemeProvider>
