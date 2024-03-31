@@ -8,7 +8,12 @@ interface ItemData {
     author_name: string;
 }
 
-const useFavourites = () => {
+interface userDetails {
+    email: string, 
+    token : string
+}
+
+const useLocalStorage = () => {
     const [favourites, setFavourites] = useState<ItemData[]>([]);
     const [allItems, setAllItems] = useState<ItemData[] | null>(null);
     const [loading, setLoading] = useState(false);
@@ -71,6 +76,38 @@ const useFavourites = () => {
         }
     };
 
+    const addUserToLocalStorage = async (email: string): Promise<void> => {
+        try {
+            const details: userDetails = {
+                email, 
+                token:email
+            }; 
+            await AsyncStorage.setItem('token', JSON.stringify(details), (error)=>error === undefined ? console.log("item added"): null); 
+            
+        } catch (error) {
+            console.log(error)
+        }
+     }
+    
+    const getUserFromLocalStorage = async (): Promise<userDetails | null> => {
+        try {
+            const res = await AsyncStorage.getItem('token');
+
+            const data: userDetails | null = res === null ? null : JSON.parse(res)
+
+            console.log('from hook',data)
+
+            if (data === null) return null; 
+            
+            return data; 
+
+        } catch (error) {
+            console.log(error);
+            return null;
+        }
+    }
+
+
 
     return {
         favourites,
@@ -78,8 +115,10 @@ const useFavourites = () => {
         loading, 
         addToFavourites,
         removeFromFavourites,
-        getAllItems
+        getAllItems, 
+        addUserToLocalStorage, 
+        getUserFromLocalStorage
     };
 };
 
-export default useFavourites;
+export default useLocalStorage;
