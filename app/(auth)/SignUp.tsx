@@ -1,14 +1,19 @@
 import { Input } from '@/components/Input'
 import { MaterialIcons } from '@expo/vector-icons'
 import { useRouter } from 'expo-router'
-import React from 'react'
-import { Button, Image, Pressable, SafeAreaView, Text, View } from 'react-native'
+import React, { useEffect } from 'react'
+import { Button, Image, Pressable, SafeAreaView, Text, View, Platform } from 'react-native'
+
+import { AppleAuthenticationButton, AppleAuthenticationButtonStyle, AppleAuthenticationButtonType, AppleAuthenticationScope, signInAsync } from "expo-apple-authentication"
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const SignUp = () => {
     const leaf = require("@/assets/images/leaf.png")
     const leaf2 = require("@/assets/images/leaf2.png")
 
     const router = useRouter()
+
+
 
 
     return (
@@ -18,7 +23,7 @@ const SignUp = () => {
 
             {/* Image Section  */}
             <View
-                className="h-1/2 relative  bg-green-800/90"
+                className={`${Platform.OS === "ios" ? "h-[300]" : "h-1/2"} relative  bg-green-800/90 rounded-t-lg`}
             >
                 <Image
                     className="opacity-10 absolute -left-40 w-[100%] h-[100%]"
@@ -63,23 +68,51 @@ const SignUp = () => {
                 />
                 <Pressable
                     onPress={() => router.navigate('SignUp')}
-                    className=" mt-3 bg-green-800/80 h-[40] flex justify-center items-center"
+                    className=" mt-3 bg-green-800/80 h-[50] flex justify-center items-center"
                 ><Text
                     className="font-regular text-md text-white"
                 >Get Started</Text></Pressable>
+
+                {
+                    Platform.OS === "ios" ? (<AppleAuthenticationButton
+                        className="mt-4"
+                        buttonType={
+                            AppleAuthenticationButtonType.SIGN_IN
+                        }
+                        buttonStyle={
+                            AppleAuthenticationButtonStyle.WHITE_OUTLINE
+                        }
+                        cornerRadius={5}
+                        style={{ width: "100%", height: 50 }}
+                        onPress={async () => {
+                            try {
+                                const credential = await signInAsync({
+                                    requestedScopes: [
+                                        AppleAuthenticationScope.FULL_NAME,
+                                        AppleAuthenticationScope.EMAIL,
+                                    ],
+                                });
+
+
+                            } catch (e) {
+                                console.log(e);
+                            }
+                        }}
+                    />) : null
+                }
                 <View
                     className="flex-row justify-between mt-10"
                 >
                     <Pressable
-                        onPress={()=>router.navigate('Login')}
+                        onPress={() => router.navigate('Login')}
                     >
                         <Text
                             className="font-semiBold text-green-800 capitalize"
                         >
                             Having issues ? Click here
                         </Text>
-               </Pressable>
-        </View>
+                    </Pressable>
+                </View>
             </View>
         </SafeAreaView>
     )
