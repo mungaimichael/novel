@@ -40,7 +40,7 @@
     <li><b>Authentication:</b>Intergrated the Apple authentication for easier login</li>
         
   </ul>
-  <h1>Techn Stack Used</h1>
+  <h1>Tech Stack Used</h1>
   <ul>
     <li><b>Framework:React Native</b></li>
     <li><b>Tools:Expo</b></li>
