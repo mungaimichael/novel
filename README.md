@@ -15,8 +15,7 @@
 <img src="./images/1.png" alt="Home" title="Optional title" height="550">
  
 <img src="./images/2.png" alt="Home" title="Optional title" height="550">
-<img src="./images/ios.png" alt="Home" title="Optional title" height="550">
-<!-- <img src="./images/4.png" alt="Home" title="Optional title" height="550"> -->
+<img src="./images/ios.jpg" alt="Home" title="Optional title" height="550">
 
  
 </div>
@@ -29,7 +28,7 @@
  
 <img src="./images/7.png" alt="Home" title="Optional title" height="550">
 <img src="./images/6.png" alt="Home" title="Optional title" height="550">
-<!-- <img src="./images/4.png" alt="Home" title="Optional title" height="550"> -->
+<img src="./images/3.png" alt="Home" title="Optional title" height="550">
 
  
 </div>
